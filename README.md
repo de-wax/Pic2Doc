@@ -2,7 +2,7 @@
 
 Transform collections of images into professionally formatted Word documents with customizable captions from Excel data.
 
-**Version:** 0.4.6
+**Version:** 0.5.0
 **Author:** René
 
 ## Features
@@ -23,8 +23,9 @@ Transform collections of images into professionally formatted Word documents wit
 - ✅ Cancel functionality
 - ✅ Error display panel
 - ✅ File overwrite warnings
-- ✅ Version number display in footer
+- ✅ Version number display in title bar
 - ✅ Auto-save settings on every change
+- ✅ Optimized compact layout (700x750)
 
 ### Technical
 - ✅ Customizable font formatting (family, size, bold, italic, underline)
@@ -285,12 +286,12 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ### Recent Releases
 
+- **v0.5.0** - Optimized GUI layout, version in title bar, compact design
+- **v0.4.9** - Settings persistence in bundled app, improved version visibility
+- **v0.4.8** - Version display positioning improvements
+- **v0.4.7** - VERSION file bundling for .app package
 - **v0.4.6** - Version number display in footer
 - **v0.4.5** - Fixed settings persistence issues
-- **v0.4.4** - Improved settings loading on startup
-- **v0.4.3** - Auto-save on all user inputs
-- **v0.4.2** - Enhanced settings persistence
-- **v0.4.1** - Settings save on close, macOS foreground activation
 - **v0.4.0** - GUI with CustomTkinter, theme support, enhanced error handling
 - **v0.3.0** - Grid-based layout, multi-column captions, no caption wrapping
 - **v0.2.0** - Test mode, smart layout, configurable margins
@@ -300,9 +301,9 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ### Future Versions
 
-- **v0.5.0**: Windows builds (.exe), cross-platform testing
-- **v0.6.0**: PDF export option, batch processing multiple Excel files
-- **v0.7.0**: Image preprocessing (resize, crop, filters)
+- **v0.6.0**: Windows builds (.exe), cross-platform testing
+- **v0.7.0**: PDF export option, batch processing multiple Excel files
+- **v0.8.0**: Image preprocessing (resize, crop, filters)
 
 ## License
 
