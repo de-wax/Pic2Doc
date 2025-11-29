@@ -27,7 +27,7 @@ class Pic2DocGUI(ctk.CTk):
 
         # Window setup
         self.title("Pic2Doc")
-        self.geometry("750x750")
+        self.geometry("750x850")
         self.resizable(True, True)
 
         # Set theme
@@ -71,7 +71,10 @@ class Pic2DocGUI(ctk.CTk):
         title_bar = ctk.CTkFrame(main_container, fg_color="transparent")
         title_bar.pack(fill="x", pady=(0, 15))
 
-        ctk.CTkLabel(title_bar, text="Pic2Doc", font=("Arial", 24, "bold")).pack(side="left")
+        # Title with version
+        version = self.get_version()
+        title_text = f"Pic2Doc v{version}"
+        ctk.CTkLabel(title_bar, text=title_text, font=("Arial", 24, "bold")).pack(side="left")
 
         # Theme selector on the right
         theme_frame = ctk.CTkFrame(title_bar, fg_color="transparent")
@@ -85,16 +88,6 @@ class Pic2DocGUI(ctk.CTk):
         )
         self.theme_selector.set("System")
         self.theme_selector.pack(side="left")
-
-        # ===== VERSION DISPLAY (BELOW TITLE) =====
-        version = self.get_version()
-        version_label = ctk.CTkLabel(
-            main_container,
-            text=f"Version {version}",
-            font=("Arial", 10),
-            text_color="gray"
-        )
-        version_label.pack(anchor="w", pady=(0, 10))
 
         # ===== FILES SECTION =====
         files_frame = ctk.CTkFrame(main_container)
