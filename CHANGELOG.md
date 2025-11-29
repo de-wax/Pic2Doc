@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.4] - 2025-11-29
+
+### Fixed
+- Settings now properly load on application startup
+- Theme setting loads without triggering unwanted save during initialization
+- Prevented saved settings from being overwritten with defaults on startup
+
+### Changed
+- Theme application during load no longer calls change_theme() to avoid save trigger
+- Direct theme mode setting during configuration load
+
 ## [0.4.3] - 2025-11-29
 
 ### Fixed

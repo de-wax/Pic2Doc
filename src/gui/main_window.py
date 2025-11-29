@@ -318,10 +318,16 @@ class Pic2DocGUI(ctk.CTk):
             self.test_limit.configure(state="normal")
         self.test_limit.set(str(self.config.get('test_image_limit', 10)))
 
-        # Theme (load saved theme)
+        # Theme (load saved theme) - don't trigger save
         saved_theme = self.config.get('theme', 'System')
         self.theme_selector.set(saved_theme)
-        self.change_theme(saved_theme)
+        # Apply theme without saving
+        theme_map = {
+            "System": "system",
+            "Hell": "light",
+            "Dunkel": "dark"
+        }
+        ctk.set_appearance_mode(theme_map.get(saved_theme, "system"))
 
     def get_current_config(self):
         """Get configuration from GUI inputs"""
