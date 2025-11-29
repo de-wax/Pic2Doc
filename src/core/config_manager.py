@@ -5,6 +5,7 @@ Handles loading, saving, and migrating configuration files
 
 import json
 import os
+import sys
 from pathlib import Path
 from typing import Dict, Any
 from ..utils.constants import CONFIG_FILE, DEFAULT_CONFIG
@@ -20,7 +21,19 @@ class ConfigManager:
         Args:
             config_path: Optional custom path to config file
         """
-        self.config_path = config_path or CONFIG_FILE
+        if config_path:
+            self.config_path = config_path
+        else:
+            # When running as PyInstaller bundle, save config in user's home directory
+            if getattr(sys, 'frozen', False):
+                # Running as bundle - use home directory
+                home_dir = Path.home()
+                self.config_path = home_dir / CONFIG_FILE
+                print(f"DEBUG: Running as bundle, config path: {self.config_path}")
+            else:
+                # Running normally - use current directory
+                self.config_path = CONFIG_FILE
+                print(f"DEBUG: Running from source, config path: {self.config_path}")
 
     def load_config(self) -> Dict[str, Any]:
         """

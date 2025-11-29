@@ -227,14 +227,17 @@ class Pic2DocGUI(ctk.CTk):
         self.action_button.pack(pady=(0, 10))
 
         # ===== VERSION FOOTER (LEFT ALIGNED) =====
+        version_footer = ctk.CTkFrame(main_container, fg_color="transparent")
+        version_footer.pack(fill="x", pady=(5, 0))
+
         version = self.get_version()
         version_label = ctk.CTkLabel(
-            main_container,
+            version_footer,
             text=f"Version {version}",
             font=("Arial", 9),
             text_color="gray"
         )
-        version_label.pack(anchor="w", padx=15, pady=(0, 5))
+        version_label.pack(anchor="w", padx=15, side="left")
 
     def change_theme(self, value):
         """Change application theme"""
