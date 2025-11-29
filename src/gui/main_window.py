@@ -86,6 +86,16 @@ class Pic2DocGUI(ctk.CTk):
         self.theme_selector.set("System")
         self.theme_selector.pack(side="left")
 
+        # ===== VERSION DISPLAY (BELOW TITLE) =====
+        version = self.get_version()
+        version_label = ctk.CTkLabel(
+            main_container,
+            text=f"Version {version}",
+            font=("Arial", 10),
+            text_color="gray"
+        )
+        version_label.pack(anchor="w", pady=(0, 10))
+
         # ===== FILES SECTION =====
         files_frame = ctk.CTkFrame(main_container)
         files_frame.pack(fill="x", pady=(0, 10))
@@ -225,19 +235,6 @@ class Pic2DocGUI(ctk.CTk):
             hover_color="#258759"
         )
         self.action_button.pack(pady=(0, 10))
-
-        # ===== VERSION FOOTER (LEFT ALIGNED) =====
-        version_footer = ctk.CTkFrame(main_container, fg_color="transparent")
-        version_footer.pack(fill="x", pady=(5, 0))
-
-        version = self.get_version()
-        version_label = ctk.CTkLabel(
-            version_footer,
-            text=f"Version {version}",
-            font=("Arial", 9),
-            text_color="gray"
-        )
-        version_label.pack(anchor="w", padx=15, side="left")
 
     def change_theme(self, value):
         """Change application theme"""
