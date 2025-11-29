@@ -44,9 +44,15 @@ class Pic2DocGUI(ctk.CTk):
         self.processing_thread = None
         self.error_list = []  # Store errors during processing
 
+        # Save settings on close
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+
         # Create GUI
         self.create_widgets()
         self.load_saved_config()
+
+        # Bring to foreground on macOS
+        self.bring_to_foreground()
 
     def create_widgets(self):
         """Create all GUI widgets"""
@@ -288,6 +294,11 @@ class Pic2DocGUI(ctk.CTk):
             self.test_limit.configure(state="normal")
         self.test_limit.set(str(self.config.get('test_image_limit', 10)))
 
+        # Theme (load saved theme)
+        saved_theme = self.config.get('theme', 'System')
+        self.theme_selector.set(saved_theme)
+        self.change_theme(saved_theme)
+
     def get_current_config(self):
         """Get configuration from GUI inputs"""
         # Parse caption columns
@@ -295,6 +306,13 @@ class Pic2DocGUI(ctk.CTk):
         caption_cols = [col.strip().upper() for col in caption_cols_str.split(',') if col.strip()]
         if not caption_cols:
             caption_cols = ['I']
+
+        # Get test limit safely
+        test_limit_value = 10  # default
+        try:
+            test_limit_value = int(self.test_limit.get())
+        except (ValueError, AttributeError):
+            pass  # Use default
 
         config = {
             'excel_file': self.excel_entry.get(),
@@ -310,7 +328,8 @@ class Pic2DocGUI(ctk.CTk):
             'font_italic': self.font_italic.get() == 1,
             'font_underline': self.font_underline.get() == 1,
             'test_mode': self.test_mode.get() == 1,
-            'test_image_limit': int(self.test_limit.get()),
+            'test_image_limit': test_limit_value,
+            'theme': self.theme_selector.get(),  # Save current theme
             'smart_layout': True,  # Always enabled
             'margin_top_cm': 1.27,    # Standard margins
             'margin_bottom_cm': 1.27,
@@ -495,6 +514,28 @@ class Pic2DocGUI(ctk.CTk):
             self.error_frame.pack(fill="x", pady=(0, 10), before=self.action_button)
 
         self.after(0, update_errors)
+
+    def bring_to_foreground(self):
+        """Bring application window to foreground (macOS specific)"""
+        import platform
+        if platform.system() == 'Darwin':  # macOS
+            # Raise window and force focus
+            self.lift()
+            self.focus_force()
+            self.attributes('-topmost', True)
+            self.after(100, lambda: self.attributes('-topmost', False))
+
+    def on_closing(self):
+        """Handle window close event - save settings before closing"""
+        # Save current configuration
+        try:
+            config = self.get_current_config()
+            self.config_manager.save_config(config)
+        except Exception as e:
+            print(f"Warning: Could not save configuration: {e}")
+
+        # Close the window
+        self.destroy()
 
 
 def main():

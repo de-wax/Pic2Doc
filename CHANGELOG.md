@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] - 2025-11-29
+
+### Added
+- Settings persistence on window close
+- Theme preference saved and restored between sessions
+- macOS foreground activation on app launch
+
+### Fixed
+- Settings not being loaded on first application start
+- Document creation bug when test mode is disabled
+- Application not appearing in foreground when launched via double-click on macOS
+- Crash when reading test limit value with test mode disabled
+
+### Changed
+- Configuration now automatically saves when closing the application
+- All settings from last session are restored on startup
+
 ## [0.4.0] - 2025-11-28
 
 ### Added
