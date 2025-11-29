@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.2] - 2025-11-29
+
+### Fixed
+- Settings now properly persist across all application restarts
+- Configuration file is created immediately on first launch
+- Settings are saved automatically when selecting files/folders
+- Theme changes are saved immediately
+- Duplicate values no longer inserted when loading saved config
+
+### Changed
+- Auto-save enabled for all user interactions (file selection, theme changes)
+- Improved settings loading to prevent duplicate entries
+
 ## [0.4.1] - 2025-11-29
 
 ### Added

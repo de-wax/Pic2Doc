@@ -224,6 +224,9 @@ class Pic2DocGUI(ctk.CTk):
         }
         ctk.set_appearance_mode(theme_map.get(value, "system"))
 
+        # Save theme preference immediately
+        self.save_current_settings()
+
     def toggle_test_mode(self):
         """Enable/disable test limit dropdown"""
         if self.test_mode.get():
@@ -240,6 +243,7 @@ class Pic2DocGUI(ctk.CTk):
         if filename:
             self.excel_entry.delete(0, "end")
             self.excel_entry.insert(0, filename)
+            self.save_current_settings()
 
     def browse_folder(self):
         """Open folder dialog for image folder"""
@@ -247,6 +251,7 @@ class Pic2DocGUI(ctk.CTk):
         if folder:
             self.folder_entry.delete(0, "end")
             self.folder_entry.insert(0, folder)
+            self.save_current_settings()
 
     def browse_output(self):
         """Open save dialog for output file"""
@@ -258,21 +263,28 @@ class Pic2DocGUI(ctk.CTk):
         if filename:
             self.output_entry.delete(0, "end")
             self.output_entry.insert(0, filename)
+            self.save_current_settings()
 
     def load_saved_config(self):
         """Load saved configuration into GUI"""
-        self.excel_entry.insert(0, self.config.get('excel_file', ''))
-        self.folder_entry.insert(0, self.config.get('image_folder', ''))
-        self.output_entry.insert(0, self.config.get('output_file', ''))
+        # Only insert if field is empty to avoid duplicates
+        if not self.excel_entry.get():
+            self.excel_entry.insert(0, self.config.get('excel_file', ''))
+        if not self.folder_entry.get():
+            self.folder_entry.insert(0, self.config.get('image_folder', ''))
+        if not self.output_entry.get():
+            self.output_entry.insert(0, self.config.get('output_file', ''))
 
         # Caption columns
-        caption_cols = self.config.get('caption_columns', ['I'])
-        if isinstance(caption_cols, list):
-            self.caption_cols_entry.insert(0, ','.join(caption_cols))
-        else:
-            self.caption_cols_entry.insert(0, caption_cols)
+        if not self.caption_cols_entry.get():
+            caption_cols = self.config.get('caption_columns', ['I'])
+            if isinstance(caption_cols, list):
+                self.caption_cols_entry.insert(0, ','.join(caption_cols))
+            else:
+                self.caption_cols_entry.insert(0, caption_cols)
 
-        self.separator_entry.insert(0, self.config.get('caption_separator', ' - '))
+        if not self.separator_entry.get():
+            self.separator_entry.insert(0, self.config.get('caption_separator', ' - '))
 
         # Layout
         self.images_per_page.set(str(self.config.get('images_per_page', 3)))
@@ -525,16 +537,17 @@ class Pic2DocGUI(ctk.CTk):
             self.attributes('-topmost', True)
             self.after(100, lambda: self.attributes('-topmost', False))
 
-    def on_closing(self):
-        """Handle window close event - save settings before closing"""
-        # Save current configuration
+    def save_current_settings(self):
+        """Save current GUI settings to configuration file"""
         try:
             config = self.get_current_config()
             self.config_manager.save_config(config)
         except Exception as e:
             print(f"Warning: Could not save configuration: {e}")
 
-        # Close the window
+    def on_closing(self):
+        """Handle window close event - save settings before closing"""
+        self.save_current_settings()
         self.destroy()
 
 
