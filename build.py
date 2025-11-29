@@ -47,6 +47,12 @@ def build_executable():
         else:
             print("  ⚠ Icon not found, building without icon")
 
+    # Add VERSION file as data
+    version_file = Path('VERSION')
+    if version_file.exists():
+        options.append(f'--add-data={version_file}:.')
+        print(f"  Including VERSION file")
+
     # Hidden imports for dependencies
     options.extend([
         '--hidden-import=openpyxl',

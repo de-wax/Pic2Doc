@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.7] - 2025-11-29
+
+### Fixed
+- VERSION file now correctly bundled in PyInstaller build
+- Version number properly displayed in built .app bundle
+- Version detection works in both development and bundled environments
+
+### Changed
+- Updated build.py to include VERSION file as data
+- Modified get_version() to check for PyInstaller frozen state
+
 ## [0.4.6] - 2025-11-29
 
 ### Added

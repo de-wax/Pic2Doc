@@ -582,7 +582,15 @@ class Pic2DocGUI(ctk.CTk):
     def get_version(self):
         """Read version from VERSION file"""
         try:
-            version_file = Path(__file__).parent.parent.parent / "VERSION"
+            # Check if running as PyInstaller bundle
+            if getattr(sys, 'frozen', False):
+                # Running in a bundle
+                bundle_dir = Path(sys._MEIPASS)
+                version_file = bundle_dir / "VERSION"
+            else:
+                # Running in normal Python environment
+                version_file = Path(__file__).parent.parent.parent / "VERSION"
+
             if version_file.exists():
                 return version_file.read_text().strip()
             return "unknown"
