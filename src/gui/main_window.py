@@ -226,6 +226,16 @@ class Pic2DocGUI(ctk.CTk):
         )
         self.action_button.pack(pady=(0, 10))
 
+        # ===== VERSION FOOTER =====
+        version = self.get_version()
+        version_label = ctk.CTkLabel(
+            main_container,
+            text=f"Version {version}",
+            font=("Arial", 9),
+            text_color="gray"
+        )
+        version_label.pack(pady=(0, 5))
+
     def change_theme(self, value):
         """Change application theme"""
         theme_map = {
@@ -568,6 +578,16 @@ class Pic2DocGUI(ctk.CTk):
             self.config_manager.save_config(config)
         except Exception as e:
             print(f"Warning: Could not save configuration: {e}")
+
+    def get_version(self):
+        """Read version from VERSION file"""
+        try:
+            version_file = Path(__file__).parent.parent.parent / "VERSION"
+            if version_file.exists():
+                return version_file.read_text().strip()
+            return "unknown"
+        except Exception:
+            return "unknown"
 
     def on_closing(self):
         """Handle window close event - save settings before closing"""
