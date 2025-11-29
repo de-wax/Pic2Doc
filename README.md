@@ -2,7 +2,7 @@
 
 Transform collections of images into professionally formatted Word documents with customizable captions from Excel data.
 
-**Version:** 0.4.0
+**Version:** 0.4.6
 **Author:** René
 
 ## Features
@@ -23,6 +23,8 @@ Transform collections of images into professionally formatted Word documents wit
 - ✅ Cancel functionality
 - ✅ Error display panel
 - ✅ File overwrite warnings
+- ✅ Version number display in footer
+- ✅ Auto-save settings on every change
 
 ### Technical
 - ✅ Customizable font formatting (family, size, bold, italic, underline)
@@ -283,6 +285,12 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ### Recent Releases
 
+- **v0.4.6** - Version number display in footer
+- **v0.4.5** - Fixed settings persistence issues
+- **v0.4.4** - Improved settings loading on startup
+- **v0.4.3** - Auto-save on all user inputs
+- **v0.4.2** - Enhanced settings persistence
+- **v0.4.1** - Settings save on close, macOS foreground activation
 - **v0.4.0** - GUI with CustomTkinter, theme support, enhanced error handling
 - **v0.3.0** - Grid-based layout, multi-column captions, no caption wrapping
 - **v0.2.0** - Test mode, smart layout, configurable margins

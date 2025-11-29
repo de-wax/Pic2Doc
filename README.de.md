@@ -2,7 +2,7 @@
 
 Verwandeln Sie Bildsammlungen in professionell formatierte Word-Dokumente mit anpassbaren Bildunterschriften aus Excel-Daten.
 
-**Version:** 0.4.0
+**Version:** 0.4.6
 **Autor:** René
 
 ## Features
@@ -23,6 +23,8 @@ Verwandeln Sie Bildsammlungen in professionell formatierte Word-Dokumente mit an
 - ✅ Abbrechen-Funktion
 - ✅ Fehleranzeige-Panel
 - ✅ Warnung vor Dateiüberschreibung
+- ✅ Versionsnummer in der Fußzeile
+- ✅ Automatisches Speichern der Einstellungen bei jeder Änderung
 
 ### Technisch
 - ✅ Anpassbare Schriftformatierung (Familie, Größe, Fett, Kursiv, Unterstrichen)
@@ -256,6 +258,12 @@ Siehe [CHANGELOG.md](CHANGELOG.md) für detaillierte Versionshistorie.
 
 ### Aktuelle Releases
 
+- **v0.4.6** - Versionsnummer-Anzeige in der Fußzeile
+- **v0.4.5** - Behobene Probleme mit Einstellungen-Persistierung
+- **v0.4.4** - Verbessertes Laden der Einstellungen beim Start
+- **v0.4.3** - Automatisches Speichern bei allen Benutzereingaben
+- **v0.4.2** - Erweiterte Einstellungen-Persistierung
+- **v0.4.1** - Einstellungen beim Schließen speichern, macOS Vordergrund-Aktivierung
 - **v0.4.0** - GUI mit CustomTkinter, Theme-Unterstützung, erweiterte Fehlerbehandlung
 - **v0.3.0** - Rasterbasiertes Layout, mehrspaltige Bildunterschriften, kein Umbruch
 - **v0.2.0** - Testmodus, intelligentes Layout, konfigurierbare Ränder
