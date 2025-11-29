@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.docx
+word_generator_config.json
+pic2doc_config.json
+
+# Personal data - DO NOT COMMIT
+*.xlsx
+pics/
+
+# Claude Code (private)
+.claude/
+CLAUDE.md
+
+# Build artifacts
+*.spec
