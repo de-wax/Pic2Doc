@@ -279,24 +279,26 @@ class Pic2DocGUI(ctk.CTk):
 
     def load_saved_config(self):
         """Load saved configuration into GUI"""
-        # Only insert if field is empty to avoid duplicates
-        if not self.excel_entry.get():
-            self.excel_entry.insert(0, self.config.get('excel_file', ''))
-        if not self.folder_entry.get():
-            self.folder_entry.insert(0, self.config.get('image_folder', ''))
-        if not self.output_entry.get():
-            self.output_entry.insert(0, self.config.get('output_file', ''))
+        # Clear and insert saved values
+        self.excel_entry.delete(0, "end")
+        self.excel_entry.insert(0, self.config.get('excel_file', ''))
+
+        self.folder_entry.delete(0, "end")
+        self.folder_entry.insert(0, self.config.get('image_folder', ''))
+
+        self.output_entry.delete(0, "end")
+        self.output_entry.insert(0, self.config.get('output_file', ''))
 
         # Caption columns
-        if not self.caption_cols_entry.get():
-            caption_cols = self.config.get('caption_columns', ['I'])
-            if isinstance(caption_cols, list):
-                self.caption_cols_entry.insert(0, ','.join(caption_cols))
-            else:
-                self.caption_cols_entry.insert(0, caption_cols)
+        caption_cols = self.config.get('caption_columns', ['I'])
+        self.caption_cols_entry.delete(0, "end")
+        if isinstance(caption_cols, list):
+            self.caption_cols_entry.insert(0, ','.join(caption_cols))
+        else:
+            self.caption_cols_entry.insert(0, caption_cols)
 
-        if not self.separator_entry.get():
-            self.separator_entry.insert(0, self.config.get('caption_separator', ' - '))
+        self.separator_entry.delete(0, "end")
+        self.separator_entry.insert(0, self.config.get('caption_separator', ' - '))
 
         # Layout
         self.images_per_page.set(str(self.config.get('images_per_page', 3)))
