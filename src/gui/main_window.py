@@ -44,12 +44,18 @@ class Pic2DocGUI(ctk.CTk):
         self.processing_thread = None
         self.error_list = []  # Store errors during processing
 
+        # Loading state - prevent auto-save during initial load
+        self.is_loading = True
+
         # Save settings on close
         self.protocol("WM_DELETE_WINDOW", self.on_closing)
 
         # Create GUI
         self.create_widgets()
         self.load_saved_config()
+
+        # Enable auto-save after initial load
+        self.is_loading = False
 
         # Bring to foreground on macOS
         self.bring_to_foreground()
@@ -92,6 +98,7 @@ class Pic2DocGUI(ctk.CTk):
         ctk.CTkLabel(excel_row, text="Excel-Datei:", anchor="w", width=100).pack(side="left")
         self.excel_entry = ctk.CTkEntry(excel_row, placeholder_text="beschreibungen.xlsx")
         self.excel_entry.pack(side="left", fill="x", expand=True, padx=10)
+        self.excel_entry.bind("<FocusOut>", lambda e: self.save_current_settings())
         ctk.CTkButton(excel_row, text="...", width=40, command=self.browse_excel).pack(side="right")
 
         # Image folder
@@ -100,6 +107,7 @@ class Pic2DocGUI(ctk.CTk):
         ctk.CTkLabel(folder_row, text="Bilder-Ordner:", anchor="w", width=100).pack(side="left")
         self.folder_entry = ctk.CTkEntry(folder_row, placeholder_text="pics/")
         self.folder_entry.pack(side="left", fill="x", expand=True, padx=10)
+        self.folder_entry.bind("<FocusOut>", lambda e: self.save_current_settings())
         ctk.CTkButton(folder_row, text="...", width=40, command=self.browse_folder).pack(side="right")
 
         # Output file
@@ -108,6 +116,7 @@ class Pic2DocGUI(ctk.CTk):
         ctk.CTkLabel(output_row, text="Ausgabedatei:", anchor="w", width=100).pack(side="left")
         self.output_entry = ctk.CTkEntry(output_row, placeholder_text="output_document.docx")
         self.output_entry.pack(side="left", fill="x", expand=True, padx=10)
+        self.output_entry.bind("<FocusOut>", lambda e: self.save_current_settings())
         ctk.CTkButton(output_row, text="...", width=40, command=self.browse_output).pack(side="right")
 
         # ===== CAPTION COLUMNS SECTION =====
@@ -122,6 +131,7 @@ class Pic2DocGUI(ctk.CTk):
         ctk.CTkLabel(col_row, text="Spalten:", anchor="w", width=100).pack(side="left")
         self.caption_cols_entry = ctk.CTkEntry(col_row, placeholder_text="I oder A,B,I")
         self.caption_cols_entry.pack(side="left", fill="x", expand=True, padx=10)
+        self.caption_cols_entry.bind("<FocusOut>", lambda e: self.save_current_settings())
 
         # Separator
         sep_row = ctk.CTkFrame(caption_frame, fg_color="transparent")
@@ -129,6 +139,7 @@ class Pic2DocGUI(ctk.CTk):
         ctk.CTkLabel(sep_row, text="Trenner:", anchor="w", width=100).pack(side="left")
         self.separator_entry = ctk.CTkEntry(sep_row, placeholder_text=" - ", width=80)
         self.separator_entry.pack(side="left", padx=10)
+        self.separator_entry.bind("<FocusOut>", lambda e: self.save_current_settings())
 
         # ===== LAYOUT & FONT SECTION (COMBINED) =====
         settings_frame = ctk.CTkFrame(main_container)
@@ -140,25 +151,25 @@ class Pic2DocGUI(ctk.CTk):
         ipp_row = ctk.CTkFrame(settings_frame, fg_color="transparent")
         ipp_row.pack(fill="x", padx=15, pady=3)
         ctk.CTkLabel(ipp_row, text="Bilder/Seite:", anchor="w", width=100).pack(side="left")
-        self.images_per_page = ctk.CTkComboBox(ipp_row, values=[str(i) for i in range(1, 11)], width=80)
+        self.images_per_page = ctk.CTkComboBox(ipp_row, values=[str(i) for i in range(1, 11)], width=80, command=lambda _: self.save_current_settings())
         self.images_per_page.pack(side="left", padx=10)
 
         # Font family and size on same row
         ctk.CTkLabel(ipp_row, text="Schrift:", anchor="w").pack(side="left", padx=(20, 5))
-        self.font_family = ctk.CTkComboBox(ipp_row, values=["Arial", "Times New Roman", "Calibri", "Helvetica"], width=140)
+        self.font_family = ctk.CTkComboBox(ipp_row, values=["Arial", "Times New Roman", "Calibri", "Helvetica"], width=140, command=lambda _: self.save_current_settings())
         self.font_family.pack(side="left", padx=5)
-        self.font_size = ctk.CTkComboBox(ipp_row, values=[str(i) for i in range(8, 25)], width=60)
+        self.font_size = ctk.CTkComboBox(ipp_row, values=[str(i) for i in range(8, 25)], width=60, command=lambda _: self.save_current_settings())
         self.font_size.pack(side="left", padx=5)
 
         # Font style
         style_row = ctk.CTkFrame(settings_frame, fg_color="transparent")
         style_row.pack(fill="x", padx=15, pady=(3, 10))
         ctk.CTkLabel(style_row, text="", width=100).pack(side="left")  # Spacer
-        self.font_bold = ctk.CTkCheckBox(style_row, text="Fett", width=80)
+        self.font_bold = ctk.CTkCheckBox(style_row, text="Fett", width=80, command=self.save_current_settings)
         self.font_bold.pack(side="left", padx=10)
-        self.font_italic = ctk.CTkCheckBox(style_row, text="Kursiv", width=80)
+        self.font_italic = ctk.CTkCheckBox(style_row, text="Kursiv", width=80, command=self.save_current_settings)
         self.font_italic.pack(side="left", padx=5)
-        self.font_underline = ctk.CTkCheckBox(style_row, text="Unterstrichen", width=120)
+        self.font_underline = ctk.CTkCheckBox(style_row, text="Unterstrichen", width=120, command=self.save_current_settings)
         self.font_underline.pack(side="left", padx=5)
 
         # ===== TEST MODE SECTION =====
@@ -172,7 +183,7 @@ class Pic2DocGUI(ctk.CTk):
         self.test_mode = ctk.CTkCheckBox(test_row, text="Aktiviert", command=self.toggle_test_mode, width=100)
         self.test_mode.pack(side="left")
         ctk.CTkLabel(test_row, text="Anzahl Bilder:").pack(side="left", padx=(10, 5))
-        self.test_limit = ctk.CTkComboBox(test_row, values=[str(i) for i in [10, 20, 30, 50, 100]], width=80, state="disabled")
+        self.test_limit = ctk.CTkComboBox(test_row, values=[str(i) for i in [10, 20, 30, 50, 100]], width=80, state="disabled", command=lambda _: self.save_current_settings())
         self.test_limit.pack(side="left")
 
         # ===== PROGRESS SECTION =====
@@ -233,6 +244,7 @@ class Pic2DocGUI(ctk.CTk):
             self.test_limit.configure(state="normal")
         else:
             self.test_limit.configure(state="disabled")
+        self.save_current_settings()
 
     def browse_excel(self):
         """Open file dialog for Excel file"""
@@ -539,6 +551,10 @@ class Pic2DocGUI(ctk.CTk):
 
     def save_current_settings(self):
         """Save current GUI settings to configuration file"""
+        # Don't save during initial load
+        if self.is_loading:
+            return
+
         try:
             config = self.get_current_config()
             self.config_manager.save_config(config)

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.3] - 2025-11-29
+
+### Fixed
+- Settings now properly save when any input field loses focus
+- All dropdown selections (images per page, font, test limit) auto-save immediately
+- All checkbox changes (font styles, test mode) auto-save immediately
+- Prevented premature save during initial application load
+
+### Changed
+- Added FocusOut event handlers to all text input fields
+- Added command callbacks to all ComboBox and CheckBox widgets
+- Loading state flag prevents auto-save during startup
+
 ## [0.4.2] - 2025-11-29
 
 ### Fixed
