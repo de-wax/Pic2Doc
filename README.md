@@ -297,14 +297,6 @@ See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 - **v0.2.0** - Test mode, smart layout, configurable margins
 - **v0.1.0** - Initial CLI version
 
-## Roadmap
-
-### Future Versions
-
-- **v0.6.0**: Windows builds (.exe), cross-platform testing
-- **v0.7.0**: PDF export option, batch processing multiple Excel files
-- **v0.8.0**: Image preprocessing (resize, crop, filters)
-
 ## License
 
 Free for personal and commercial use.

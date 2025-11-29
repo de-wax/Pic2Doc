@@ -270,14 +270,6 @@ Siehe [CHANGELOG.md](CHANGELOG.md) für detaillierte Versionshistorie.
 - **v0.2.0** - Testmodus, intelligentes Layout, konfigurierbare Ränder
 - **v0.1.0** - Erste CLI-Version
 
-## Roadmap
-
-### Zukünftige Versionen
-
-- **v0.6.0**: Windows-Builds (.exe), plattformübergreifende Tests
-- **v0.7.0**: PDF-Export-Option, Stapelverarbeitung mehrerer Excel-Dateien
-- **v0.8.0**: Bildvorverarbeitung (Größenänderung, Zuschneiden, Filter)
-
 ## Lizenz
 
 Frei für private und kommerzielle Nutzung.
