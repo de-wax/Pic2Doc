@@ -27,7 +27,7 @@ class Pic2DocGUI(ctk.CTk):
 
         # Window setup
         self.title("Pic2Doc")
-        self.geometry("750x850")
+        self.geometry("700x750")
         self.resizable(True, True)
 
         # Set theme
@@ -74,7 +74,7 @@ class Pic2DocGUI(ctk.CTk):
         # Title with version
         version = self.get_version()
         title_text = f"Pic2Doc v{version}"
-        ctk.CTkLabel(title_bar, text=title_text, font=("Arial", 24, "bold")).pack(side="left")
+        ctk.CTkLabel(title_bar, text=title_text, font=("Arial", 18, "bold")).pack(side="left")
 
         # Theme selector on the right
         theme_frame = ctk.CTkFrame(title_bar, fg_color="transparent")

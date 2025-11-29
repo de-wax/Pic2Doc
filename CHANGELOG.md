@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2025-11-29
+
+### Changed
+- Version now displayed in title bar as "Pic2Doc v0.5.0"
+- Optimized window dimensions to 700x750 for more compact layout
+- Reduced title font size from 24pt to 18pt
+- Removed excess vertical and horizontal space
+
+### Fixed
+- All GUI elements including action button now properly visible
+- Improved overall layout efficiency
+
 ## [0.4.9] - 2025-11-29
 
 ### Fixed
