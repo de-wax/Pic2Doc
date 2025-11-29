@@ -226,7 +226,7 @@ class Pic2DocGUI(ctk.CTk):
         )
         self.action_button.pack(pady=(0, 10))
 
-        # ===== VERSION FOOTER =====
+        # ===== VERSION FOOTER (LEFT ALIGNED) =====
         version = self.get_version()
         version_label = ctk.CTkLabel(
             main_container,
@@ -234,7 +234,7 @@ class Pic2DocGUI(ctk.CTk):
             font=("Arial", 9),
             text_color="gray"
         )
-        version_label.pack(pady=(0, 5))
+        version_label.pack(anchor="w", padx=15, pady=(0, 5))
 
     def change_theme(self, value):
         """Change application theme"""
@@ -289,6 +289,8 @@ class Pic2DocGUI(ctk.CTk):
 
     def load_saved_config(self):
         """Load saved configuration into GUI"""
+        print(f"DEBUG: Loading config with excel_file='{self.config.get('excel_file')}'")
+
         # Clear and insert saved values
         self.excel_entry.delete(0, "end")
         self.excel_entry.insert(0, self.config.get('excel_file', ''))
@@ -571,13 +573,21 @@ class Pic2DocGUI(ctk.CTk):
         """Save current GUI settings to configuration file"""
         # Don't save during initial load
         if self.is_loading:
+            print("DEBUG: Skipping save during initial load")
             return
 
         try:
             config = self.get_current_config()
-            self.config_manager.save_config(config)
+            print(f"DEBUG: Saving config with excel_file='{config.get('excel_file')}'")
+            result = self.config_manager.save_config(config)
+            if result:
+                print("DEBUG: Save successful")
+            else:
+                print("DEBUG: Save failed")
         except Exception as e:
             print(f"Warning: Could not save configuration: {e}")
+            import traceback
+            traceback.print_exc()
 
     def get_version(self):
         """Read version from VERSION file"""
